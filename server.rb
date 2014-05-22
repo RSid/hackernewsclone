@@ -18,9 +18,21 @@ def get_articles (file_name)
   @all_articles
 end
 
-@desc=""
+def is_repeat (file_name,array)
 
-###
+ articles = CSV.read(file_name)
+ is_there = false
+
+ articles.each do |article_entry|
+    if article_entry.join(",")==array.join(",")
+      is_there = true
+    end
+ end
+ is_there
+
+end
+
+#server call logic below
 
 get '/' do
   @articles_info=get_articles('articles.csv')
@@ -40,17 +52,22 @@ post "/submit" do
   @description=params["description"]
 
 
-
   if @title == "" || @description == "" || @url == ""
     @message="Not a valid submission. Please include a title, url, and description."
     erb :submit
   else
+    article_info=[@title,@url,@description]
 
-    #get this into a persisted file
-      CSV.open("articles.csv","a") do |csv|
-        csv<<[@title,@url,@description]
-      end
-      redirect "/"
+    if is_repeat('articles.csv',article_info)==true
+      @message="Article already submitted. You are not original."
+      erb :submit
+    else
+      #gets this into a persisted file
+        CSV.open("articles.csv","a") do |csv|
+          csv<<article_info
+        end
+        redirect "/"
+    end
 
   end
 

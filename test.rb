@@ -38,5 +38,20 @@ def article_urls_verbose (file_name)
 end
 
 
+def check_if_repeat (file_name,array)
 
-print article_urls_verbose('articles.csv')[0].slice(/www(.*?).com/)
+ articles = CSV.read(file_name)
+ is_there = false
+
+ articles.each do |article_entry|
+    if article_entry.join(",")==array.join(",")
+      is_there = true
+    end
+ end
+ is_there
+
+end
+
+
+#print get_articles('articles.csv')
+print check_if_repeat('articles.csv',['Article','www.bo.com','Cool stuff'])
