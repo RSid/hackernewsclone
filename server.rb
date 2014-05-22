@@ -57,7 +57,6 @@ post "/submit" do
 
 
   if @title == "" || @description == "" || @url == "" || @description.length<20 || is_good_url(@url)==false
-    binding.pry
     @message="Not a valid submission. Please include a title, valid url, and description of 20 or more characters."
     erb :submit
   else

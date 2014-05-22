@@ -1,3 +1,21 @@
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
 body {
   margin: 10px;
   padding: 0px 70px;
@@ -5,11 +23,14 @@ body {
   font-size: .9em;
 }
 
+
+
 .nav-container {
   background: #ff6600;
 }
 
 .nav {
+  float: left;
   padding: 0;
   margin: 0;
 }
