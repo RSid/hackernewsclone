@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Slacker News</title>
+
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+
+
+  <div class="nav-container">
+    <ul class="nav">
+      <li id="logo"> Y </li>
+      <li><a href="#"><strong>Hacker News</strong></a></li>
+      <li>new &nbsp; |</li>
+      <li>comments &nbsp; |</li>
+      <li>ask &nbsp; |</li>
+      <li>jobs &nbsp; |</li>
+      <li>submit</li>
+    </ul>
+
+    <ul class="logger">
+    <li id="login"> login</li>
+    </ul>
+  </div>
+
+    <form action="/submit" method="post">
+        <label for="submit">Article Submission: </label>
+        <input type="text" name="submit" id="submit" />
+
+        <input type="submit" value="Submit" />
+    </form>
+
+  </body>
+  </html>

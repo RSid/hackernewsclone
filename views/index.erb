@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Slacker News</title>
+
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body>
+
+
+  <div class="nav-container">
+    <ul class="nav">
+      <li id="logo"> Y </li>
+      <li><a href="#"><strong>Hacker News</strong></a></li>
+      <li>new &nbsp; |</li>
+      <li>comments &nbsp; |</li>
+      <li>ask &nbsp; |</li>
+      <li>jobs &nbsp; |</li>
+      <li> <a href= <%="/submit" %> > submit </a> </li>
+    </ul>
+
+    <ul class="logger">
+    <li id="login"> login</li>
+    </ul>
+  </div>
+
+  <div class="content-list">
+
+    <ol class="news-items">
+
+    <% @articles_info.each do |article_info| %>
+          <li>&#9650;
+            <span class="news-title">
+              <a href= <%= "#{article_info[:URL]}" %>> <%= article_info[:Title] %> </a>
+            </span>
+
+            <p class="points">
+              <%= article_info[:Description] %>
+            </p>
+          </li>
+        <% end %>
+
+
+
+      <li>&#9650;
+
+        <span class="news-title">
+          <a href="https://www.firebase.com/blog/2013-08-15-firebase-leaves-beta-today.html"> This is a Static Example of Correct Format, For Testing Purposes</a>
+        </span> (firebase.com)
+
+        <p class="points">
+            63 points by lyime 56 minutes ago | 17 comments</li>
+         </p>
+      </li>
+
+
+      </li>
+
+
+
+      <li class="more"><span class="news-title">&nbsp;&nbsp;&nbsp;More</span></li>
+
+    </ol>
+
+  </div>
+
+  <footer>
+    <ul class="footer">
+      <li>Lists &nbsp; |</li>
+      <li>RSS &nbsp; |</li>
+      <li>Bookmarklet &nbsp; |</li>
+      <li>Guidelines &nbsp; |</li>
+      <li>FAQ &nbsp; |</li>
+      <li>DMCA &nbsp; |</li>
+      <li>News News &nbsp; |</li>
+      <li>Feature Requests &nbsp; |</li>
+      <li>Bugs &nbsp; |</li>
+      <li>YCombinator &nbsp; |</li>
+      <li>Apply &nbsp; |</li>
+      <li>Library</li>
+    </ul>
+
+    <div class="search-container">
+      <form>
+        <label>Search</label>
+        <input type="search" name="search">
+      </form>
+    </div>
+
+  </footer>
+
+  </body>
+</html>
