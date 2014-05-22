@@ -9,8 +9,7 @@
 
   <body>
 
-
-  <div class="nav-container">
+   <div class="nav-container">
     <ul class="nav">
       <li id="logo"> Y </li>
       <li><a href="/"><strong>Hacker News</strong></a></li>
@@ -18,9 +17,9 @@
       <li>comments &nbsp; |</li>
       <li>ask &nbsp; |</li>
       <li>jobs &nbsp; |</li>
-      <li>submit</li>
+      <li> <a href= <%="/submit" %> > submit </a> </li>
     </ul>
-
+    <!-- Why the heck does login pop out of the nav bar only when I refresh (not 1st navigate to) the submit page? -->
     <ul class="logger">
     <li id="login"> login</li>
     </ul>
@@ -28,17 +27,19 @@
 
     <form action="/submit" method="post">
         <label for="title">Submit Article Title: </label>
-        <input type="text" name="title" id="title" />
+        <input type="text" name="title" id="title" value="<%= @title %>"/>
         <br>
         <label for="url">Submit Article Url: </label>
-        <input type="text" name="url" id="url" />
+        <input type="text" name="url" id="url" value="<%= @url %>"/>
         <br>
         <label for="description">Submit Article Description: </label>
-        <input type="text" name="description" id="description" />
+        <input type="text" name="description" id="description" value="<%= @description %>" />
         <br>
         <input type="submit" value="Submit" />
 
     </form>
+
+    <p><%= @message %></p>
 
   </body>
   </html>

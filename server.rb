@@ -18,7 +18,7 @@ def get_articles (file_name)
   @all_articles
 end
 
-
+@desc=""
 
 ###
 
@@ -35,14 +35,24 @@ end
 
 
 post "/submit" do
-  title=params["title"]
-  url=params["url"]
-  description=params["description"]
+  @title=params["title"]
+  @url=params["url"]
+  @description=params["description"]
 
-  #get this into a persisted file
-  CSV.open("articles.csv","a") do |csv|
-    csv<<[title,url,description]
+
+
+  if @title == "" || @description == "" || @url == ""
+    @message="Not a valid submission. Please include a title, url, and description."
+    erb :submit
+  else
+
+    #get this into a persisted file
+      CSV.open("articles.csv","a") do |csv|
+        csv<<[@title,@url,@description]
+      end
+      redirect "/"
+
   end
 
-  redirect "/submit"
+
 end
