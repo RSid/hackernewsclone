@@ -1,5 +1,6 @@
 require 'CSV'
 require 'pry'
+require 'open-uri'
 
 def get_articles (file_name)
   @all_articles=[]
@@ -52,6 +53,9 @@ def check_if_repeat (file_name,array)
 
 end
 
+def is_good_url (string)
+  (string.include? ".com") || (string.include? ".net") || (string.include? ".gov") || (string.include? ".io") || (string.include? ".org")
+end
 
-#print get_articles('articles.csv')
-print check_if_repeat('articles.csv',['Article','www.bo.com','Cool stuff'])
+
+print is_good_url('here.com')

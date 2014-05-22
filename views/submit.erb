@@ -25,6 +25,7 @@
     </ul>
   </div>
 
+    <div class="article-submitter">
     <form action="/submit" method="post">
         <label for="title">Submit Article Title: </label>
         <input type="text" name="title" id="title" value="<%= @title %>"/>
@@ -35,9 +36,11 @@
         <label for="description">Submit Article Description: </label>
         <input type="text" name="description" id="description" value="<%= @description %>" />
         <br>
+        <br>
         <input type="submit" value="Submit" />
 
     </form>
+    </div>
 
     <p><%= @message %></p>
 

@@ -34,14 +34,13 @@
           <li>&#9650;
             <span class="news-title">
               <a href= <%= "#{article_info[:URL]}" %>> <%= article_info[:Title] %> </a>
-            </span> <%= "(#{article_info[:URL].slice( /(.*?\.com)/ ) } )" %>
+            </span> <%= "(#{article_info[:URL].slice( /(.*?(.com|.net|.io|.gov|.org))/ ) } )" %>
 
             <p class="points">
               <%= article_info[:Description] %>
             </p>
           </li>
         <% end %>
-
 
 
 

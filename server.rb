@@ -32,6 +32,10 @@ def is_repeat (file_name,array)
 
 end
 
+def is_good_url (string)
+  (string.include? ".com") || (string.include? ".net") || (string.include? ".gov") || (string.include? ".io") || (string.include? ".org")
+end
+
 #server call logic below
 
 get '/' do
@@ -52,8 +56,9 @@ post "/submit" do
   @description=params["description"]
 
 
-  if @title == "" || @description == "" || @url == ""
-    @message="Not a valid submission. Please include a title, url, and description."
+  if @title == "" || @description == "" || @url == "" || @description.length<20 || is_good_url(@url)==false
+    binding.pry
+    @message="Not a valid submission. Please include a title, valid url, and description of 20 or more characters."
     erb :submit
   else
     article_info=[@title,@url,@description]
