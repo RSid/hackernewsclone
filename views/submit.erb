@@ -13,7 +13,7 @@
   <div class="nav-container">
     <ul class="nav">
       <li id="logo"> Y </li>
-      <li><a href="#"><strong>Hacker News</strong></a></li>
+      <li><a href="/"><strong>Hacker News</strong></a></li>
       <li>new &nbsp; |</li>
       <li>comments &nbsp; |</li>
       <li>ask &nbsp; |</li>
@@ -27,10 +27,17 @@
   </div>
 
     <form action="/submit" method="post">
-        <label for="submit">Article Submission: </label>
-        <input type="text" name="submit" id="submit" />
-
+        <label for="title">Submit Article Title: </label>
+        <input type="text" name="title" id="title" />
+        <br>
+        <label for="url">Submit Article Url: </label>
+        <input type="text" name="url" id="url" />
+        <br>
+        <label for="description">Submit Article Description: </label>
+        <input type="text" name="description" id="description" />
+        <br>
         <input type="submit" value="Submit" />
+
     </form>
 
   </body>

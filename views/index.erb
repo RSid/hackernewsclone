@@ -13,7 +13,7 @@
   <div class="nav-container">
     <ul class="nav">
       <li id="logo"> Y </li>
-      <li><a href="#"><strong>Hacker News</strong></a></li>
+      <li><a href="/"><strong>Hacker News</strong></a></li>
       <li>new &nbsp; |</li>
       <li>comments &nbsp; |</li>
       <li>ask &nbsp; |</li>
@@ -34,7 +34,7 @@
           <li>&#9650;
             <span class="news-title">
               <a href= <%= "#{article_info[:URL]}" %>> <%= article_info[:Title] %> </a>
-            </span>
+            </span> <%= "(#{article_info[:URL].slice( /(.*?\.com)/ ) } )" %>
 
             <p class="points">
               <%= article_info[:Description] %>
@@ -43,20 +43,6 @@
         <% end %>
 
 
-
-      <li>&#9650;
-
-        <span class="news-title">
-          <a href="https://www.firebase.com/blog/2013-08-15-firebase-leaves-beta-today.html"> This is a Static Example of Correct Format, For Testing Purposes</a>
-        </span> (firebase.com)
-
-        <p class="points">
-            63 points by lyime 56 minutes ago | 17 comments</li>
-         </p>
-      </li>
-
-
-      </li>
 
 
 

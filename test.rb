@@ -32,11 +32,11 @@ def article_urls_verbose (file_name)
   @urls_v=[]
 
   @all_articles.each do |article_info|
-    @urls<<article_info[:URL]
+    @urls_v<<article_info[:URL]
   end
   @urls_v
 end
 
 
 
-print article_urls('articles.csv')
+print article_urls_verbose('articles.csv')[0].slice(/www(.*?).com/)

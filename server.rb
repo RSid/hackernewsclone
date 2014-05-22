@@ -35,8 +35,14 @@ end
 
 
 post "/submit" do
-  body=params["body"]
   title=params["title"]
+  url=params["url"]
+  description=params["description"]
+
   #get this into a persisted file
+  CSV.open("articles.csv","a") do |csv|
+    csv<<[title,url,description]
+  end
+
   redirect "/submit"
 end
