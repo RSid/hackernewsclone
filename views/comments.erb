@@ -30,11 +30,10 @@
   <div class="all-comments">
     <ul>
       <% @comments.each do |comment| %>
-        <li>
-        <span class="user">&#9650; <%= comment[1] %></span><br>
-        <%= comment[3] %>
-        <p>Reply below</p>
-         </li>
+            <span class="user">&#9650; <%= comment[1] %></span><br>
+            <%= comment[3] %>
+            <p>Reply below</p>
+             </li>
       <% end %>
     </ul>
   </div>

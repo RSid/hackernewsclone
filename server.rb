@@ -22,15 +22,13 @@ def find_articles
   db_connection do |conn|
     conn.exec('SELECT * FROM slacker_articles').values
   end
-
 end
 
 
 def save_article(url, title, description)
   db_connection do |conn|
     conn.exec_params('INSERT INTO slacker_articles (url, title, description,created_at) VALUES ($1,$2,$3,now())',[url,title,description])
-end
-
+  end
 end
 
 def is_repeat (url)
@@ -38,15 +36,23 @@ def is_repeat (url)
  db_connection do |conn|
     conn.exec('SELECT url FROM slacker_articles WHERE url=' + url).values
   end
-
 end
 
-def find_comments
+
+
+def find_all_comments
   db_connection do |conn|
     conn.exec('SELECT * FROM comments').values
   end
-
 end
+
+def find_comments(id)
+  db_connection do |conn|
+    conn.exec_params('SELECT * FROM comments WHERE article_id= $1',[id]).values
+  end
+end
+
+
 
 def save_comments(user,article_id,comment)
   db_connection do |conn|
@@ -99,8 +105,9 @@ end
 get '/articles/:id/comments' do
   @article_id=params[:id]
 
-  @comments=find_comments()
+  @articles_info=find_articles()
 
+  @comments=find_comments(@article_id)
 
   erb :comments
 end
@@ -111,7 +118,7 @@ post '/articles/:id/comments' do
   @user=params["user"]
   @comment=params["comment"]
 
-  @comments=find_comments()
+
 
   save_comments(@user,@article_id,@comment)
 
