@@ -84,6 +84,17 @@ body {
   font-size: .75em;
 }
 
+.content-list p {
+  margin: 0px;
+  padding: 5px;
+}
+
+.content-list p a {
+  text-decoration: none;
+  color: #a3a3a3;
+  font-size: 1.3em;
+}
+
 .news-items li {
   padding-top: 8px;
 }
@@ -159,6 +170,11 @@ body {
   padding: 0px 10px;
 }
 
+.add-comment p {
+  margin: 0px;
+  padding: 15px 0px;
+}
+
 .all-comments {
   background: #f9f9f5;
   padding: 10px 0px;
@@ -168,20 +184,22 @@ body {
 .all-comments ul {
   list-style: none;
   margin: 0px;
+  padding: 0px;
 }
 
 .all-comments ul li {
   padding: 5px;
 }
 
-.user {
-  color:#a3a3a3;
-}
 
 .all-comments ul li a {
   color: #000000;
 }
 
 .article-submitter {
+  padding: 10px;
+}
+
+form {
   padding: 10px;
 }

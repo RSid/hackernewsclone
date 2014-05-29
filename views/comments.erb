@@ -26,23 +26,27 @@
     </ul>
   </div>
 
+  <div class="content-list">
 
-  <div class="all-comments">
-    <ul>
-      <% @comments.each do |comment| %>
-            <span class="user">&#9650; <%= comment[1] %></span><br>
-            <%= comment[3] %>
-            <p>Posted at: <%= "#{(Time.parse(comment[4])).strftime("%c")}" %></p>
-            <p>Reply below</p>
-             </li>
-      <% end %>
-    </ul>
-  </div>
+  <% @articles_info.each do |article| %>
+    <% if article[0]==@article_id %>
+      <p>&#9650;<a href= <%= "#{article[1]}" %> target=_blank> <%= article[2] %> </a>
+      <%= "(#{article[1].slice( /(.*?(.com|.net|.io|.gov|.org))/ ) } )" %></p>
+
+      <p class="points"> <%= "Submitted at #{(Time.parse(article[4])).strftime("%c")}" %> </p>
+    <% end %>
+  <% end %>
 
   <div class="add-comment">
+
+  <p><%= @message %></p>
+
   <form action= <%= "/articles/#{@article_id}/comments" %> method="post">
     <label for="user">Username: </label>
+    <br>
+    <br>
     <input type="text" name="user" id="user"/>
+    <br>
     <br>
     <label for="comment">Comment: </label>
     <br>
@@ -52,6 +56,24 @@
     <input type="submit" Value="add comment"/>
 
   </form>
+  </div>
+
+
+  <div class="all-comments">
+    <ul>
+      <% if @comments != nil %>
+        <% @comments.each do |comment| %>
+              <li>&#9650; <%= "#{comment[1]} posted on #{(Time.parse(comment[4])).strftime("%c")}" %><br>
+              <span class="news-title">
+              <%= comment[3] %>
+              </span>
+              <p>Comment above</p>
+               </li>
+        <% end %>
+
+      <% end %>
+    </ul>
+  </div>
   </div>
 
 

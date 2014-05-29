@@ -118,9 +118,12 @@ post '/articles/:id/comments' do
   @user=params["user"]
   @comment=params["comment"]
 
-  save_comments(@user,@article_id,@comment,Time.now)
-
-
-  redirect "/articles/"+@article_id+"/comments"
+  if @user == "" || @comment == "" || @comment.length<5
+    @message="Please include a username and a comment longer than 5 characters."
+    erb :comments
+  else
+    save_comments(@user,@article_id,@comment,Time.now)
+    redirect "/articles/"+@article_id+"/comments"
+  end
 
 end
