@@ -33,10 +33,18 @@ def save_article(url, title, description)
 
 end
 
+def is_repeat (url)
+
+ db_connection do |conn|
+    conn.exec('SELECT url FROM slacker_articles WHERE url=' + url).values
+  end
+
+end
+
 
 
 def is_good_url (string)
-  (string.include? ".com") || (string.include? ".net") || (string.include? ".gov") || (string.include? ".io") || (string.include? ".org")
+  (string.include? "http://") || (string.include? "https://")
 end
 
 ############################
@@ -49,26 +57,28 @@ get '/' do
   erb :index
 end
 
-get '/submit' do
+get '/articles/new' do
 
   erb :submit
 end
 
 
-post "/submit" do
+post "/articles/new" do
   @title=params["title"]
   @url=params["url"]
   @description=params["description"]
 
-
-  if @title == "" || @description == "" || @url == "" || @description.length<20 #|| is_good_url(@url)==false
+  if @title == "" || @description == "" || @url == "" || @description.length<20 || is_good_url(@url)==false
     @message="Not a valid submission. Please include a title, valid url, and description of 20 or more characters."
+    erb :submit
+  elsif is_repeat(("'" + @url + "'")).flatten[0]==@url
+
+    @message="Article already submitted. You are not original."
     erb :submit
   else
     save_article(@url,@title,@description)
 
-   redirect "/"
-
+    redirect "/"
   end
 
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <title>Slacker News</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
   </head>
 
   <body>
@@ -17,7 +17,7 @@
         <li>comments &nbsp; |</li>
         <li>ask &nbsp; |</li>
         <li>jobs &nbsp; |</li>
-        <li> <a href="/submit"> submit </a> </li>
+        <li> <a href="/articles/new"> submit </a> </li>
       </ul>
 
       <ul class="logger">
@@ -27,7 +27,7 @@
 
 <div class="content-list">
     <div class="article-submitter">
-    <form action="/submit" method="post">
+    <form action="/articles/new" method="post">
         <label for="title">Submit Article Title: </label>
         <input type="text" name="title" id="title" value="<%= @title %>"/>
         <br>

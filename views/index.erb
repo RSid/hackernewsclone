@@ -18,7 +18,7 @@
       <li>comments &nbsp; |</li>
       <li>ask &nbsp; |</li>
       <li>jobs &nbsp; |</li>
-      <li> <a href= <%="/submit" %> > submit </a> </li>
+      <li> <a href= <%="/articles/new" %> > submit </a> </li>
     </ul>
 
     <ul class="logger">
@@ -33,15 +33,14 @@
     <% @articles_info.each do |article_info| %>
           <li>&#9650;
             <span class="news-title">
-              <a href= <%= "#{article_info[1]}" %> target=_blank> <%= article_info[3] %> </a>
+              <a href= <%= "#{article_info[1]}" %> target=_blank> <%= article_info[2] %> </a>
             </span> <%= "(#{article_info[1].slice( /(.*?(.com|.net|.io|.gov|.org))/ ) } )" %>
+            <p><%= "#{article_info[3]}"%></p>
 
             <p class="points"> <%= "Submitted at #{(Time.parse(article_info[4])).strftime("%c")} | Comments" %>
             </p>
           </li>
         <% end %>
-
-
 
 
       <li class="more"><span class="news-title">&nbsp;&nbsp;&nbsp;More</span></li>
