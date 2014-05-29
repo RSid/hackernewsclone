@@ -1,61 +1,49 @@
 require 'CSV'
 require 'pry'
-require 'open-uri'
-
-def get_articles (file_name)
-  @all_articles=[]
-
-  CSV.foreach(file_name, :headers => true) do |row|
-    title=row["title"]
-    url=row["url"]
-    description=row["description"]
+require 'redis'
+require 'json'
 
 
-    @all_articles.push( {:Title => title, :URL => url, :Description => description} )
+def get_connection
+  if ENV.has_key?("REDISCLOUD_URL")
+    Redis.new(url: ENV["REDISCLOUD_URL"])
+  else
+    Redis.new
   end
-  @all_articles
 end
 
 
-def article_titles (file_name)
-  @all_articles=get_articles(file_name)
+def find_articles
+  redis = get_connection
+  serialized_articles = redis.lrange("slacker:articles", 0, -1)
 
-  @titles=[]
+  articles = []
 
-  @all_articles.each do |article_info|
-    @titles<<article_info[:Title]
+  serialized_articles.each do |article|
+    articles << JSON.parse(article, symbolize_names: true)
   end
-  @titles
-end
 
-def article_urls_verbose (file_name)
-  @all_articles=get_articles(file_name)
-  @urls_v=[]
-
-  @all_articles.each do |article_info|
-    @urls_v<<article_info[:URL]
-  end
-  @urls_v
+  articles
 end
 
 
-def check_if_repeat (file_name,array)
+def save_article(url, title, description)
+  article = { url: url, title: title, description: description }
 
- articles = CSV.read(file_name)
- is_there = false
-
- articles.each do |article_entry|
-    if article_entry.join(",")==array.join(",")
-      is_there = true
-    end
- end
- is_there
-
+  redis = get_connection
+  redis.rpush("slacker:articles", article.to_json)
 end
 
-def is_good_url (string)
-  (string.include? ".com") || (string.include? ".net") || (string.include? ".gov") || (string.include? ".io") || (string.include? ".org")
+def delete_article(url, title, description)
+  article = { url: url, title: title, description: description }
+
+  redis = get_connection
+  redis.rdel(article)
 end
 
+get_connection
 
-print is_good_url('here.com')
+#save_article('bee.com','Bee','bbgun')
+delete_article('bee.com','Bee','bbgun')
+
+print find_articles

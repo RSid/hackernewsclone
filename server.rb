@@ -1,78 +1,50 @@
 require 'sinatra'
+require 'shotgun'
 require 'CSV'
-require 'redis'
+require 'pry'
+require 'pg'
 require 'json'
 
 
-def get_connection
-  if ENV.has_key?("REDISCLOUD_URL")
-    Redis.new(url: ENV["REDISCLOUD_URL"])
-  else
-    Redis.new
+def db_connection
+  begin
+    connection = PG.connect(dbname: 'slacker_news')
+
+    yield(connection)
+
+  ensure
+    connection.close
   end
 end
 
 
 def find_articles
-  redis = get_connection
-  serialized_articles = redis.lrange("slacker:articles", 0, -1)
-
-  articles = []
-
-  serialized_articles.each do |article|
-    articles << JSON.parse(article, symbolize_names: true)
+  db_connection do |conn|
+    conn.exec('SELECT * FROM slacker_articles').values
   end
 
-  articles
 end
 
 
 def save_article(url, title, description)
-  article = { url: url, title: title, description: description }
-
-  redis = get_connection
-  redis.rpush("slacker:articles", article.to_json)
-end
-
-###
-
-
-def get_articles (file_name)
-  @all_articles=[]
-
-  CSV.foreach(file_name, :headers => true) do |row|
-    title=row["title"]
-    url=row["url"]
-    description=row["description"]
-
-
-    @all_articles.push( {:Title => title, :URL => url, :Description => description} )
+  db_connection do |conn|
+    conn.exec_params('INSERT INTO slacker_articles (url, title, description,created_at) VALUES ($1,$2,$3,now())',[url,title,description])
   end
-  @all_articles
-end
-
-def is_repeat (file_name,array)
-
- articles = CSV.read(file_name)
- is_there = false
-
- articles.each do |article_entry|
-    if article_entry.join(",")==array.join(",")
-      is_there = true
-    end
- end
- is_there
 
 end
+
+
 
 def is_good_url (string)
   (string.include? ".com") || (string.include? ".net") || (string.include? ".gov") || (string.include? ".io") || (string.include? ".org")
 end
 
-#server call logic below
+############################
+#CONTROLLERS BELOW
+############################
 
 get '/' do
-  @articles_info=get_articles('articles.csv')
+  @articles_info=find_articles()
 
   erb :index
 end
@@ -89,22 +61,13 @@ post "/submit" do
   @description=params["description"]
 
 
-  if @title == "" || @description == "" || @url == "" || @description.length<20 || is_good_url(@url)==false
+  if @title == "" || @description == "" || @url == "" || @description.length<20 #|| is_good_url(@url)==false
     @message="Not a valid submission. Please include a title, valid url, and description of 20 or more characters."
     erb :submit
   else
-    article_info=[@title,@url,@description]
+    save_article(@url,@title,@description)
 
-    if is_repeat('articles.csv',article_info)==true
-      @message="Article already submitted. You are not original."
-      erb :submit
-    else
-      #gets this into a persisted file
-        CSV.open("articles.csv","a") do |csv|
-          csv<<article_info
-        end
-        redirect "/"
-    end
+   redirect "/"
 
   end
 

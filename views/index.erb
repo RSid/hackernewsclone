@@ -33,11 +33,10 @@
     <% @articles_info.each do |article_info| %>
           <li>&#9650;
             <span class="news-title">
-              <a href= <%= "#{article_info[:URL]}" %> target=_blank> <%= article_info[:Title] %> </a>
-            </span> <%= "(#{article_info[:URL].slice( /(.*?(.com|.net|.io|.gov|.org))/ ) } )" %>
+              <a href= <%= "#{article_info[1]}" %> target=_blank> <%= article_info[3] %> </a>
+            </span> <%= "(#{article_info[1].slice( /(.*?(.com|.net|.io|.gov|.org))/ ) } )" %>
 
-            <p class="points">
-              <%= article_info[:Description] %>
+            <p class="points"> <%= "Submitted at #{(Time.parse(article_info[4])).strftime("%c")} | Comments" %>
             </p>
           </li>
         <% end %>
