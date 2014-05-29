@@ -29,7 +29,7 @@ end
 def save_article(url, title, description)
   db_connection do |conn|
     conn.exec_params('INSERT INTO slacker_articles (url, title, description,created_at) VALUES ($1,$2,$3,now())',[url,title,description])
-  end
+end
 
 end
 
@@ -39,6 +39,19 @@ def is_repeat (url)
     conn.exec('SELECT url FROM slacker_articles WHERE url=' + url).values
   end
 
+end
+
+def find_comments
+  db_connection do |conn|
+    conn.exec('SELECT * FROM comments').values
+  end
+
+end
+
+def save_comments(user,article_id,comment)
+  db_connection do |conn|
+    conn.exec_params('INSERT INTO comments (posted_by, article_id,comment) VALUES ($1,$2,$3)',[user,article_id,comment])
+  end
 end
 
 
@@ -81,5 +94,28 @@ post "/articles/new" do
     redirect "/"
   end
 
+end
+
+get '/articles/:id/comments' do
+  @article_id=params[:id]
+
+  @comments=find_comments()
+
+
+  erb :comments
+end
+
+post '/articles/:id/comments' do
+  @article_id=params[:id]
+
+  @user=params["user"]
+  @comment=params["comment"]
+
+  @comments=find_comments()
+
+  save_comments(@user,@article_id,@comment)
+
+
+  redirect "/articles/"+@article_id+"/comments"
 
 end

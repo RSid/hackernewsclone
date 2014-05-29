@@ -4,21 +4,21 @@
     <meta charset="utf-8"/>
     <title>Slacker News</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
   </head>
 
   <body>
 
 
-  <div class="nav-container">
+ <div class="nav-container cf">
     <ul class="nav">
       <li id="logo"> Y </li>
-      <li><a href="#"><strong>Hacker News</strong></a></li>
+      <li><a href="/"><strong>Hacker News</strong></a></li>
       <li>new &nbsp; |</li>
       <li>comments &nbsp; |</li>
       <li>ask &nbsp; |</li>
       <li>jobs &nbsp; |</li>
-      <li>submit</li>
+      <li> <a href= <%="/articles/new" %> > submit </a> </li>
     </ul>
 
     <ul class="logger">
@@ -26,19 +26,27 @@
     </ul>
   </div>
 
-  <div class="content-list">
-  <ul class="comment-item">
-      <li>&#9650; <span class="news-title"><a href="https://www.firebase.com/blog/2013-08-15-firebase-leaves-beta-today.html"> Firebase Leaves Beta Today</a></span> (firebase.com)
-          <p class="points">
-            63 points by lyime 56 minutes ago | 17 comments</li>
-          </p>
-      </li>
+
+  <div class="all-comments">
+    <ul>
+      <% @comments.each do |comment| %>
+        <li>
+        <span class="user">&#9650; <%= comment[1] %></span><br>
+        <%= comment[3] %>
+        <p>Reply below</p>
+         </li>
+      <% end %>
+    </ul>
   </div>
 
   <div class="add-comment">
-  <form>
-    <textarea name="comments" id="comments" rows="8" cols="60">
-
+  <form action= <%= "/articles/#{@article_id}/comments" %> method="post">
+    <label for="user">Username: </label>
+    <input type="text" name="user" id="user"/>
+    <br>
+    <label for="comment">Comment: </label>
+    <br>
+    <textarea name="comment" id="comment" rows="8" cols="60">
     </textarea>
     <br>
     <input type="submit" Value="add comment"/>
@@ -46,36 +54,6 @@
   </form>
   </div>
 
-  <div class="all-comments">
-    <ul>
-      <li> <span class="user">&#9650; Chuckie Cheese 4 hours ago | link </span> <br><br>By and large, the good things that come out of IoT will be larger in number to the not so good things, by virtue of the fact that folks are generally designing these things to do useful things. We know that because every technology that has been developed, its intent leads to a skewed distribution of 'good' or 'bad' uses. For example 'cars' many more 'good' uses than 'bad' uses, 'bombs' many more 'bad' uses than 'good' uses. Some things which are just a basic discovery like 'plastic' about an equal number of good and bad uses.
-      <br><br><a href="#">reply</a>
-        <ul>
-          <li> <span class="user">&#9650; Arthur Dent 6 hours ago | link </span> <br><br>
-            I've read stories of farmers in developing nations using modified cellphones to control distant irrigation pumps via SMS, saving them significant travel time. I think the IoT will help everyone in the areas they can benefit most, so long as it remains possible to detach one's equipment from the manufacturers' cloud services and retain one's privacy.
-            <br><br><a href="#">reply</a>
-          </li>
-          <li>
-          <span class="user">&#9650; Ford Prefect 2 hours ago | link </span> <br><br>
-          I live in Illinois and my grandmother lives in Central Florida. I installed a Nest thermostat, Protect sensors, as well as an IP-enabled sprinkler controller (http://www.roslen.com/products.html). I can manage her entire home remotely for her, so when she calls, its "click click all done".
-          The "Internet Of Things" is already here.
-        <br><br><a href="#">reply</a>
-            <ul>
-              <li>
-              <span class="user">&#9650; Slartibartfast 1 hours ago | link </span> <br><br>
-              Completely agree ChuckMcM, and further more, I feel it is important to realise that we are discussing the issues with IoT early on, before most people are using IoT devices. There are a huge number of people working on the solutions to the problems listed in the article.
-              <br><br><a href="#">reply</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li> <span class="user">&#9650; Clark Kent 1 hours ago | link </span> <br><br>
-        Often I imagine being Geordi La Forge[2] with electromagnetic vision and how all these devices will be cramming our lives with more electromagnetic noise. It's not clear to me we understand the effects of this on everything from health to un-intended side effects to other technology.
-        <br><br><a href="#">reply</a>
-      </li>
-    <ul>
-  </div>
 
   <footer>
     <ul class="footer">

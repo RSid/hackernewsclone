@@ -37,7 +37,7 @@
             </span> <%= "(#{article_info[1].slice( /(.*?(.com|.net|.io|.gov|.org))/ ) } )" %>
             <p><%= "#{article_info[3]}"%></p>
 
-            <p class="points"> <%= "Submitted at #{(Time.parse(article_info[4])).strftime("%c")} | Comments" %>
+            <p class="points"> <%= "Submitted at #{(Time.parse(article_info[4])).strftime("%c")} | " %> <a href= <%= "/articles/#{article_info[0]}/comments" %> ><%= "Comments" %></a>
             </p>
           </li>
         <% end %>
