@@ -54,9 +54,9 @@ end
 
 
 
-def save_comments(user,article_id,comment)
+def save_comments(user,article_id,comment,time_posted)
   db_connection do |conn|
-    conn.exec_params('INSERT INTO comments (posted_by, article_id,comment) VALUES ($1,$2,$3)',[user,article_id,comment])
+    conn.exec_params('INSERT INTO comments (posted_by, article_id,comment,created_at) VALUES ($1,$2,$3,$4)',[user,article_id,comment,time_posted])
   end
 end
 
@@ -118,9 +118,7 @@ post '/articles/:id/comments' do
   @user=params["user"]
   @comment=params["comment"]
 
-
-
-  save_comments(@user,@article_id,@comment)
+  save_comments(@user,@article_id,@comment,Time.now)
 
 
   redirect "/articles/"+@article_id+"/comments"

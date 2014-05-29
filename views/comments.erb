@@ -32,6 +32,7 @@
       <% @comments.each do |comment| %>
             <span class="user">&#9650; <%= comment[1] %></span><br>
             <%= comment[3] %>
+            <p>Posted at: <%= "#{(Time.parse(comment[4])).strftime("%c")}" %></p>
             <p>Reply below</p>
              </li>
       <% end %>
